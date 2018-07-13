@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<title>SelfMade Terminal</title>
+	<script src="jquery-3.3.1.min.js"></script>
+	<link rel="stylesheet" href="bootstrap.min.css">
+	<script src="bootstrap.min.js"></script>
+	<style>
+		body, html {
+		    height: 100%;
+		    background-repeat: no-repeat;
+		    background-image: linear-gradient(45deg, #FBDA61, #FF5ACD);
+		}
+
+		.card-container.card {
+		    max-width: 350px;
+		    padding: 40px 40px;
+		}
+
+		.btn {
+		    font-weight: 700;
+		    height: 36px;
+		    -moz-user-select: none;
+		    -webkit-user-select: none;
+		    user-select: none;
+		    cursor: default;
+		}
+		#container {
+			position:absolute;
+			top:50%;
+			left:50%;
+			width:1500px;
+			height:800px;
+			background:#FFFFFF5F;
+			margin: -400px 0 0 -750px;
+			border-radius: 10px;
+		}
+		#terminalDiv {
+			width: 650px;
+			height: 350px;
+			border: solid 7px #FFEEF9;
+			border-radius: 5px;
+			text-align: center;
+			margin-bottom: 30px;
+			float: left;
+		}
+		#colorDiv {
+			width: 650px;
+			height: 350px;
+			border: solid 7px #FFEEF9;
+			border-radius: 5px;
+			text-align: center;
+			float: left;
+		}
+		#box {
+			float: left;
+			width: 650px;
+			height: 700px;
+			margin-top: 30px;
+			margin-left: 30px;
+		}
+		#commandDiv{
+			width: 750px;
+			height: 730px;
+			border: solid 7px #FFEEF9;
+			border-radius: 5px;
+			text-align: center;
+			margin-top: 30px;
+			margin-left: 30px;
+			float: left;
+		}
+		.colorBox {
+			width: 400px;
+			height: 70px;
+	    	margin-left: 50%;
+	    	transform: translateX(-50%);
+	    	float: left;
+		}
+		.colorBox > p {
+			font-size: 20px;
+			float: left;
+			margin-right: 20px;
+			line-height: 70px;
+		}
+		.colorBox > input {
+			float: left;
+			width: 170px;
+			height: 50px;
+			margin-top: 10px;
+		}
+		h2 {
+			margin: 20px;
+		}
+		.settingBox {
+	    	margin-left: 50%;
+	    	transform: translateX(-50%);
+	    	margin-bottom: 20px;
+	    	float: left;
+	    	width: 500px;
+	    	text-align: center;
+		}
+		.settingBox > p {
+			font-size: 20px;
+			float: left;
+			margin-right: 20px;
+		}
+		.settingBox > input {
+			width: 300px;
+			height: 30px;
+			float: left;
+		}
+	</style>
+</head>
+<body>
+    <div id="container">
+    	<div id="box">
+    		<div id="terminalDiv">
+	    		<h2>Terminal</h2>
+	    		<div class="settingBox">
+	    			<p>Title</p>
+	    			<input type="text" placeholder="HyeongJin's Portfolio">
+	    		</div>
+	    		<div class="settingBox">
+	    			<p>Info URL</p>
+	    			<input type="text" placeholder="abcdef@github.com">
+	    		</div>
+	    		<div class="settingBox">
+	    			<p>Profile Photo URL</p>
+	    			<input type="text" placeholder="www.yourProfileUrl.com/yourProfile">
+	    		</div>
+	    		<div class="settingBox">
+	    			<p>Prompt Text</p>
+	    			<input type="text" placeholder="[HyeongJin@Portfolio] #">
+	    		</div>
+	    	</div>
+	    	<div id="colorDiv">
+	    		<h2>Color</h2>
+	    		<div class="colorBox">
+	    			<p>TITLE </p>
+	    			<input type="color">
+	    		</div>
+	    		<div class="colorBox">
+	    			<p>TEXT </p>
+	    			<input type="color">
+	    		</div>
+	    		<div class="colorBox">
+	    			<p>PROMPT </p>
+	    			<input type="color">
+	    		</div>
+	    	</div>
+	    </div>
+    	<div id="commandDiv">
+    		<h2>Command</h2>
+    	</div>
+    	
+    </div>
+</body>
+</html>
+<script>
+	$( document ).ready(function() {
+
+	});
+</script>
