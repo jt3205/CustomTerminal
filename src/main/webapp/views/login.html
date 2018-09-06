@@ -154,9 +154,9 @@
                 <span id="reauth-email" class="reauth-email"></span>
                 <input type="email" id="inputEmail" class="form-control" placeholder="아이디" required autofocus>
                 <input type="password" id="inputPassword" class="form-control" placeholder="비밀번호" required>
-                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">로그인</button>
+                <button class="btn btn-lg btn-primary btn-block btn-signin" id="submit" type="button">로그인</button>
             </form><!-- /form -->
-            <a href="#" class="forgot-password">
+            <a href="http://localhost:8080/views/register.html" class="forgot-password">
                 회원가입
             </a>
         </div><!-- /card-container -->
@@ -165,6 +165,46 @@
 </html>
 <script>
 	$( document ).ready(function() {
-	    
+	    $("#submit").click(function () {
+	    	var id = $("#inputEmail").val();
+	    	var password = $("#inputPassword").val();
+	    	$.ajax({   
+				method: "POST",
+				url: "http://localhost:8080/api/user",
+				contentType:'application/json',
+				data: JSON.stringify({"id":id, "password":password}),
+				success:function(data){
+					if(data.length > 0){
+						setCookie("token", data, "Thu, 16-07-2019 21:25:05 GMT");
+						window.location.href = "http://localhost:8080/views/main.html"
+					}
+				},
+				error:function(data){
+					alert(data);
+				}
+		  	});
+	    });
+
+	    function setCookie(cName, cValue, cDay){
+	        var expire = new Date();
+	        expire.setDate(expire.getDate() + cDay);
+	        cookies = cName + '=' + escape(cValue) + '; path=/ '; // 한글 깨짐을 막기위해 escape(cValue)를 합니다.
+	        if(typeof cDay != 'undefined') cookies += ';expires=' + expire.toGMTString() + ';';
+	        document.cookie = cookies;
+	    }
+
+	    function getCookie(cName) {
+	        cName = cName + '=';
+	        var cookieData = document.cookie;
+	        var start = cookieData.indexOf(cName);
+	        var cValue = '';
+	        if(start != -1){
+	            start += cName.length;
+	            var end = cookieData.indexOf(';', start);
+	            if(end == -1)end = cookieData.length;
+	            cValue = cookieData.substring(start, end);
+	        }
+	        return unescape(cValue);
+	    }
 	});
 </script>

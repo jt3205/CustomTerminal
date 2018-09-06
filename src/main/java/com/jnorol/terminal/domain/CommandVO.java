@@ -33,7 +33,7 @@ public class CommandVO {
 	@Column(name = "COM_COMMAND", nullable = false, updatable = false)
 	private String command;
 
-	@Column(name = "COM_TEXT", nullable = false, updatable = false)
+	@Column(name = "COM_TEXT", nullable = false, updatable = false, length = 100000)
 	private String text;
 
 	@JoinColumn(name = "USER_SEQ")

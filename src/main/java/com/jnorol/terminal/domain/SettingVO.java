@@ -51,6 +51,9 @@ public class SettingVO {
 	@Column(name = "SET_PROMPT_COLOR", nullable = true)
 	private String promptColor;
 	
+	@Column(name = "SET_BACKGROUND_COLOR", nullable = true)
+	private String backgroundColor;
+	
 	@JoinColumn(name = "USER_SEQ", nullable = false)
 	@OneToOne(fetch = FetchType.EAGER)
 	private UserVO user;

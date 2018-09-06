@@ -20,9 +20,9 @@ public class CommandTests {
 	
 	{
 		commandVO = CommandVO.builder()
-					.command("test1")
-					.text("Test1 명령어 입니다!")
-					.userVO(new UserVO(1, "", "", ""))
+					.command("test")
+					.text("Test 명령어 입니다!")
+					.userVO(new UserVO(2, "", "", ""))
 					.build();
 	}
 	

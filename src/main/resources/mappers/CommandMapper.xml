@@ -22,4 +22,26 @@
 		where
 			USER_SEQ = #{value}
 	</select>
+	
+	<select id="getCommand" parameterType="com.jnorol.terminal.domain.CommandVO" resultType="com.jnorol.terminal.domain.CommandVO">
+		select
+			COM_SEQ as seq,
+			COM_COMMAND as command,
+			COM_TEXT as text,
+			USER_SEQ as 'userVO.seq'
+		from
+			TB_COMMAND
+		where
+			USER_SEQ = #{userVO.seq} and
+			COM_COMMAND = #{command};
+	</select>
+	<update id="updateCommand" parameterType="com.jnorol.terminal.domain.CommandVO">
+		UPDATE 
+			`TB_COMMAND` 
+		SET 
+			`COM_COMMAND`=#{command},
+			`COM_TEXT`=#{text}
+		WHERE 
+			`COM_SEQ`=${seq}
+	</update>
 </mapper>

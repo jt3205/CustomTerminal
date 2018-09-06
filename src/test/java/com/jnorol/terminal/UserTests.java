@@ -19,8 +19,8 @@ public class UserTests {
 	
 	{
 		userVO = UserVO.builder()
-				.id("test")
-				.name("테스트")
+				.id("park")
+				.name("박형진")
 				.password("test")
 				.build();
 	}

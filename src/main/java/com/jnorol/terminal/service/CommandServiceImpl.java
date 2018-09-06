@@ -2,8 +2,6 @@ package com.jnorol.terminal.service;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,9 +17,9 @@ public class CommandServiceImpl implements CommandService {
 	
 	@Autowired
 	private CommandMapper commandMapper;
-	
-	@Autowired
-	private EntityManager em;
+
+//	@Autowired
+//	private EntityManager em;
 	
 	@Transactional
 	@Override
@@ -50,12 +48,25 @@ public class CommandServiceImpl implements CommandService {
 	@Transactional
 	@Override
 	public void updateCommand(CommandVO commandVO) {
-		CommandVO oldVO = em.find(CommandVO.class, commandVO.getSeq());
-		if(oldVO != null) {
-			oldVO.update(commandVO);
-			commandRepository.save(oldVO);
-		}
-		em.close();
+		System.out.println(commandVO.getSeq());
+		System.out.println(commandVO.getCommand());
+		System.out.println(commandVO.getText());
+		System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5");
+		
+		commandMapper.updateCommand(commandVO);
+		
+//		CommandVO oldVO = em.find(CommandVO.class, commandVO.getSeq());
+//		if(oldVO != null) {
+//			oldVO.update(commandVO);
+//			commandRepository.save(oldVO);
+//		}
+//		em.close();
+	}
+
+	@Transactional
+	@Override
+	public CommandVO getCommand(CommandVO commandVO) {
+		return commandMapper.getCommand(commandVO);
 	}
 
 }

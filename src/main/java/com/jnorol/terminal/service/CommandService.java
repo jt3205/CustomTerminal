@@ -13,5 +13,7 @@ public interface CommandService {
 	
 	public String getText(CommandVO commandVO);
 	
+	public CommandVO getCommand(CommandVO commandVO);
+	
 	public List<CommandVO> getAllCommandByUserSeq(int userSeq);
 }

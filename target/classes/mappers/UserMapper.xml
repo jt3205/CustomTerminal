@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jnorol.terminal.mapper.UserMapper">
+	<select id="login" parameterType="com.jnorol.terminal.domain.UserVO" resultType="com.jnorol.terminal.domain.UserVO">
+		SELECT 
+			`USER_SEQ` as seq
+		FROM 
+			`TB_USER` 
+		WHERE 
+			`USER_ID` = #{id}
+			and `USER_PW` = #{password};
+	</select>
+	
+	<select id="getUserSeqById" resultType="int" parameterType="java.lang.String">
+		SELECT 
+			`USER_SEQ` as seq
+		FROM 
+			`TB_USER` 
+		WHERE 
+			`USER_ID` = #{value};
+	</select>
+</mapper>

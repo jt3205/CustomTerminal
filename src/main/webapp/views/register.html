@@ -156,11 +156,11 @@
             <form class="form-signin">
                 <span id="reauth-email" class="reauth-email"></span>
                 <input type="email" id="inputEmail" class="form-control" placeholder="이메일 아이디" required autofocus>
-                <button class="btn btn-lg btn-primary btn-block btn-signin" type="button">이메일 인증</button>
+                <button class="btn btn-lg btn-primary btn-block btn-signin" type="button" id="emailButton">이메일 인증</button>
                 <input type="text" id="key" class="form-control" placeholder="인증 키" required>
                 <input type="password" id="inputPassword" class="form-control" placeholder="비밀번호" required>
-                <input type="text" class="form-control" placeholder="이름" required>
-                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">회원 가입</button>
+                <input type="text" class="form-control" placeholder="이름" id="inputName" required>
+                <button class="btn btn-lg btn-primary btn-block btn-signin" type="button" id="registerButton">회원 가입</button>
             </form><!-- /form -->
         </div><!-- /card-container -->
     </div><!-- /container -->
@@ -168,6 +168,44 @@
 </html>
 <script>
 	$( document ).ready(function() {
-		
+		$("#emailButton").click(function () {
+			$("#inputEmail").attr("readOnly", true);
+			$("#emailButton").prop("disabled", true);
+
+			$.ajax({   
+				method: "GET",
+				url: "http://localhost:8080/api/user/"+$("#inputEmail").val(),
+				contentType:'application/json',
+				success:function(data){
+					alert("이메일이 전송되었습니다.");
+				},
+				error:function(data){
+					alert(data);
+				}
+		  	});
+		});
+
+		$("#registerButton").click(function () {
+			$.ajax({   
+				method: "POST",
+				url: "http://localhost:8080/api/user/register",
+				contentType:'application/json',
+				data:JSON.stringify({
+					"id": $("#inputEmail").val(),
+					"name": $("#inputName").val(),
+					"password": $("#inputPassword").val(),
+					"authKey": $("#key").val()
+				}),
+				success:function(data){
+					if(data == true) {
+						alert("회원가입 성공!");
+						window.location.href = "http://localhost:8080/views/login.html";
+					}
+				},
+				error:function(data){
+					alert("회원가입 실패!");
+				}
+		  	});
+		});
 	});
 </script>
