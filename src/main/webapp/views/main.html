@@ -187,11 +187,11 @@
 		var temp = 1;
 		if(getCookie("token") == "") {
 			alert("로그인이 필요한 서비스 입니다.");
-			window.location.href = "http://localhost:8080/views/login.html";
+			window.location.href = "/views/login.html";
 		} else {
 			$.ajax({   
 				type: "GET",
-				url: "http://localhost:8080/api/setting/"+getCookie("token"),
+				url: "/api/setting/"+getCookie("token"),
 				contentType:'application/json',
 				success:function(data){
 					if(data != null) {
@@ -215,7 +215,7 @@
 
 			$.ajax({   
 				type: "GET",
-				url: "http://localhost:8080/api/command/list/"+getCookie("token"),
+				url: "/api/command/list/"+getCookie("token"),
 				contentType:'application/json',
 				success:function(data){
 					if(data != null) {
@@ -266,7 +266,7 @@
 			}
 			$.ajax({   
 				type: "POST",
-				url: "http://localhost:8080/api/setting",
+				url: "/api/setting",
 				contentType:'application/json',
 				data:JSON.stringify({
 					"seq" : settingSeq,
@@ -283,9 +283,10 @@
 				}),
 				success:function(data){
 					alert("저장 완료!");
-					$.ajax({   
+					location.reload();
+					/* $.ajax({   
 						type: "GET",
-						url: "http://localhost:8080/api/setting/"+getCookie("token"),
+						url: "/api/setting/"+getCookie("token"),
 						contentType:'application/json',
 						success:function(data){
 							if(data != null) {
@@ -305,7 +306,8 @@
 						error:function(data){
 							alert("초기 데이터를 세팅하세요");
 						}
-					});
+					}); */
+					
 				},
 				error:function(data){
 					alert("저장 실패.");
@@ -380,7 +382,7 @@
 	    		</div>
 	    		<div class="settingBox">
 	    			<p>Info URL</p>
-	    			<input type="text" placeholder="abcdef@github.com" id="inputInfo">
+	    			<input type="text" placeholder="github.com/example" id="inputInfo">
 	    		</div>
 	    		<div class="settingBox">
 	    			<p>Profile Photo URL</p>

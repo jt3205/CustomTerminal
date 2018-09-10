@@ -7,10 +7,10 @@
 	    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
 	    <title>Selfmade Terminal</title>
 	    <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" type="text/css" />
-	    <link rel="stylesheet" type="text/css" href="http://localhost:8080/views/css.css">
-		<!-- <script src="http://localhost:8080/views/jquery-3.3.1.min.js"></script>
-		<link rel="stylesheet" href="http://localhost:8080/views/bootstrap.min.css">
-		<script src="https://localhost:8080/views/bootstrap.min.js"></script> -->
+	    <link rel="stylesheet" type="text/css" href="/views/css.css">
+		<!-- <script src="/views/jquery-3.3.1.min.js"></script>
+		<link rel="stylesheet" href="/views/bootstrap.min.css">
+		<script src="/views/bootstrap.min.js"></script> -->
  	</head>
   	<body>
 	    <div id="container">
@@ -21,7 +21,7 @@
 	    </div>
 	</body>
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <!-- <script src="http://localhost:8080/views/js.js"></script> -->
+    <!-- <script src="/views/js.js"></script> -->
     <script>
 		$( document ).ready(function() {
 			var setting;
@@ -29,7 +29,7 @@
 			console.log(uid);
 			$.ajax({   
 				type: "GET",
-				url: "http://localhost:8080/api/setting/get/"+uid,
+				url: "/api/setting/get/"+uid,
 				contentType:'application/json',
 				success:function(data){
 					if(data != null) {
@@ -168,7 +168,7 @@
 			          if (cmd) {
 			          	$.ajax({   
 							type: "GET",
-							url: "http://localhost:8080/api/command/"+cmd+"/"+uid,
+							url: "/api/command/"+cmd+"/"+uid,
 							contentType:'application/json',
 							success:function(data){
 								if(data.text != undefined) {

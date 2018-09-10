@@ -174,7 +174,7 @@
 
 			$.ajax({   
 				method: "GET",
-				url: "http://localhost:8080/api/user/"+$("#inputEmail").val(),
+				url: "/api/user/"+$("#inputEmail").val(),
 				contentType:'application/json',
 				success:function(data){
 					alert("이메일이 전송되었습니다.");
@@ -188,7 +188,7 @@
 		$("#registerButton").click(function () {
 			$.ajax({   
 				method: "POST",
-				url: "http://localhost:8080/api/user/register",
+				url: "/api/user/register",
 				contentType:'application/json',
 				data:JSON.stringify({
 					"id": $("#inputEmail").val(),
@@ -199,7 +199,7 @@
 				success:function(data){
 					if(data == true) {
 						alert("회원가입 성공!");
-						window.location.href = "http://localhost:8080/views/login.html";
+						window.location.href = "/views/login.html";
 					}
 				},
 				error:function(data){

@@ -48,9 +48,10 @@ public class SettingController {
 	public void setSetting(@RequestBody MainPageDTO dto) {
 		settingService.insertSetting(dto.getSettingVO());
 		CommandVO commandVO[] = dto.getCommandList();
+		UserVO user = UserVO.builder().seq(Integer.parseInt(jwtUtil.getClaim(dto.getJwt(), "userSeq"))).build();
 		
 		for (int i = 0; i < commandVO.length; i++) {
-			commandVO[i].setUserVO(new UserVO(Integer.parseInt(jwtUtil.getClaim(dto.getJwt(), "userSeq")), "", "", ""));
+			commandVO[i].setUserVO(user);
 			System.out.println(commandVO[i].getSeq() + " ============================================= ");
 			if(commandVO[i].getSeq() == 0) {
 				commandService.insertCommand(commandVO[i]);

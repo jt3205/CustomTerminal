@@ -156,7 +156,7 @@
                 <input type="password" id="inputPassword" class="form-control" placeholder="비밀번호" required>
                 <button class="btn btn-lg btn-primary btn-block btn-signin" id="submit" type="button">로그인</button>
             </form><!-- /form -->
-            <a href="http://localhost:8080/views/register.html" class="forgot-password">
+            <a href="/views/register.html" class="forgot-password">
                 회원가입
             </a>
         </div><!-- /card-container -->
@@ -170,13 +170,13 @@
 	    	var password = $("#inputPassword").val();
 	    	$.ajax({   
 				method: "POST",
-				url: "http://localhost:8080/api/user",
+				url: "/api/user",
 				contentType:'application/json',
 				data: JSON.stringify({"id":id, "password":password}),
 				success:function(data){
 					if(data.length > 0){
 						setCookie("token", data, "Thu, 16-07-2019 21:25:05 GMT");
-						window.location.href = "http://localhost:8080/views/main.html"
+						window.location.href = "/views/main.html"
 					}
 				},
 				error:function(data){
@@ -188,7 +188,7 @@
 	    function setCookie(cName, cValue, cDay){
 	        var expire = new Date();
 	        expire.setDate(expire.getDate() + cDay);
-	        cookies = cName + '=' + escape(cValue) + '; path=/ '; // 한글 깨짐을 막기위해 escape(cValue)를 합니다.
+	        cookies = cName + '=' + escape(cValue) + '; path=/ '; // 한글 깨짐을 막기위해
 	        if(typeof cDay != 'undefined') cookies += ';expires=' + expire.toGMTString() + ';';
 	        document.cookie = cookies;
 	    }
