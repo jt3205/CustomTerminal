@@ -157,13 +157,18 @@
 		}
 		.button:hover {
 			box-shadow: 6px 12px #444;
-			right: 116px;
 		}
 		#saveButton:hover {
 			bottom: 82px;
+			right: 116px;
 		}
 		#addButton:hover {
 			bottom: 212px;
+			right: 116px;
+		}
+		#terminalButton:hover {
+			bottom: 82px;
+			right: 246px;
 		}
 		.button > img {
 			width: 60px;
@@ -176,6 +181,10 @@
 		#addButton {
 			bottom: 200px;
 			right: 100px;
+		}
+		#terminalButton {
+			bottom: 70px;
+			right: 230px;
 		}
 		#inputCommand {
 			height: 53px;
@@ -284,30 +293,6 @@
 				success:function(data){
 					alert("저장 완료!");
 					location.reload();
-					/* $.ajax({   
-						type: "GET",
-						url: "/api/setting/"+getCookie("token"),
-						contentType:'application/json',
-						success:function(data){
-							if(data != null) {
-								$("#inputTitle").val(data.title);
-								$("#inputInfo").val(data.infoURL);
-								$("#inputPhoto").val(data.imageURL);
-								$("#inputPrompt").val(data.prompt);
-								$("#inputTitleColor").val(data.titleColor);
-								$("#inputTextColor").val(data.textColor);
-								$("#inputPromptColor").val(data.promptColor);
-								$("#inputBackgroundColor").val(data.backgroundColor);
-								settingSeq = data.seq;
-							} else {
-								alert("초기 데이터를 세팅하세요!");
-							}
-						},
-						error:function(data){
-							alert("초기 데이터를 세팅하세요");
-						}
-					}); */
-					
 				},
 				error:function(data){
 					alert("저장 실패.");
@@ -353,8 +338,24 @@
 				temp++;
 			}
 		});
-
-
+		$("#terminalButton").click(function () {
+			$.ajax({   
+				type: "GET",
+				url: "/api/user/id/"+getCookie("token"),
+				contentType:'application/json',
+				success:function(data){
+					if(data != null) {
+						location.href = "/terminal/"+data;
+					} else {
+						alert("초기 데이터를 세팅하세요!");
+					}
+				},
+				error:function(data){
+					alert("초기 데이터를 세팅하세요");
+				}
+			});
+		});
+		
 		function getCookie(cName) {
 	        cName = cName + '=';
 	        var cookieData = document.cookie;
@@ -435,6 +436,9 @@
 	</div>
 	<div id="addButton" class="button">
 		<img src="add.png" alt="추가">	
+	</div>
+	<div id="terminalButton" class="button">
+		<img src="terminal.png" alt="터미널로 이동">	
 	</div>
 </body>
 </html>

@@ -25,8 +25,11 @@ public class UserTests {
 				.build();
 	}
 	
-	@Test
+	//@Test
 	public void insertUserTest() {
 		userService.insertUser(userVO);
+	}
+	@Test
+	public void contextLoads() {
 	}
 }

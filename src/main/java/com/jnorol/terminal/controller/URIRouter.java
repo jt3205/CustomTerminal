@@ -11,6 +11,6 @@ public class URIRouter {
 	@RequestMapping(value = "/terminal/{id}", method = RequestMethod.GET)
 	public String mainPage(@PathVariable String id, Model model) {
 		System.out.println("sad");
-		return "temp";
+		return "terminal";
 	}
 }

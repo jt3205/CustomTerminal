@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<title>SelfMade Terminal</title>
+	<script src="jquery-3.3.1.min.js"></script>
+	<link rel="stylesheet" href="bootstrap.min.css">
+	<script src="bootstrap.min.js"></script>
+	<style>
+		body, html {
+		    height: 100%;
+		    background-repeat: no-repeat;
+		    background-image: linear-gradient(45deg, #FBDA61, #FF5ACD);
+		}
+
+		.card-container.card {
+		    max-width: 350px;
+		    padding: 40px 40px;
+		}
+
+		.btn {
+		    font-weight: 700;
+		    height: 36px;
+		    -moz-user-select: none;
+		    -webkit-user-select: none;
+		    user-select: none;
+		    cursor: default;
+		}
+		#container {
+			position:absolute;
+			top:50%;
+			left:50%;
+			width:1500px;
+			height:800px;
+			background:#FFFFFF5F;
+			margin: -400px 0 0 -750px;
+			border-radius: 10px;
+		}
+		#terminalDiv {
+			width: 650px;
+			height: 350px;
+			border: solid 7px #FFEEF9;
+			border-radius: 5px;
+			text-align: center;
+			margin-bottom: 30px;
+			float: left;
+		}
+		#colorDiv {
+			width: 650px;
+			height: 350px;
+			border: solid 7px #FFEEF9;
+			border-radius: 5px;
+			text-align: center;
+			float: left;
+		}
+		#box {
+			float: left;
+			width: 650px;
+			height: 700px;
+			margin-top: 30px;
+			margin-left: 30px;
+		}
+		#commandDiv{
+			width: 750px;
+			height: 730px;
+			border: solid 7px #FFEEF9;
+			border-radius: 5px;
+			text-align: center;
+			margin-top: 30px;
+			margin-left: 30px;
+			float: left;
+		}
+		.colorBox {
+			width: 400px;
+			height: 60px;
+	    	margin-left: 50%;
+	    	transform: translateX(-50%);
+	    	float: left;
+		}
+		.colorBox > p {
+			font-size: 20px;
+			float: left;
+			margin-right: 20px;
+			line-height: 65px;
+		}
+		.colorBox > input {
+			float: left;
+			width: 170px;
+			height: 45px;
+			margin-top: 10px;
+		}
+		h2 {
+			margin: 20px;
+		}
+		.settingBox {
+	    	margin-left: 50%;
+	    	transform: translateX(-50%);
+	    	margin-bottom: 20px;
+	    	float: left;
+	    	width: 500px;
+	    	text-align: center;
+		}
+		.settingBox > p {
+			font-size: 20px;
+			float: left;
+			margin-right: 20px;
+		}
+		.settingBox > input {
+			width: 300px;
+			height: 30px;
+			float: left;
+		}
+		#commandBox {
+			overflow-y: scroll;
+			margin-top: 50px;
+			height: 610px;
+
+		}
+		table {
+		    border-collapse: collapse;
+		    width: 100%;
+		}
+
+		th, td {
+		    text-align: left;
+		    padding: 8px;
+		}
+		
+		tr > td:nth-child(1){
+			width: 170px;
+		}
+
+		tr > td:nth-child(3){
+			display: none;
+		}
+
+		tr:nth-child(even){background-color: #f2f2f2}
+
+		th {
+		    background-color: #4CAF50;
+		    color: white;
+		}
+
+		.button {
+			border-radius: 20px;
+			background-color: white;
+			width: 100px;
+			height: 100px;
+			position: fixed;
+			text-align: center;
+			line-height: 100px;
+			bottom: 100px;
+			right: 100px;
+    		box-shadow: 2px 4px #000;
+    		transition: box-shadow 0.8s, bottom 0.8s, right 0.8s;
+    		cursor: pointer;
+		}
+		.button:hover {
+			box-shadow: 6px 12px #444;
+		}
+		#saveButton:hover {
+			bottom: 82px;
+			right: 116px;
+		}
+		#addButton:hover {
+			bottom: 212px;
+			right: 116px;
+		}
+		#terminalButton:hover {
+			bottom: 82px;
+			right: 246px;
+		}
+		.button > img {
+			width: 60px;
+			height: 60px;
+		}
+		#saveButton {
+			bottom: 70px;
+			right: 100px;
+		}
+		#addButton {
+			bottom: 200px;
+			right: 100px;
+		}
+		#terminalButton {
+			bottom: 70px;
+			right: 230px;
+		}
+		#inputCommand {
+			height: 53px;
+			width: 145px;
+		}
+	</style>
+	<script>
+	$( document ).ready(function() {
+		var temp = 1;
+		if(getCookie("token") == "") {
+			alert("로그인이 필요한 서비스 입니다.");
+			window.location.href = "/views/login.html";
+		} else {
+			$.ajax({   
+				type: "GET",
+				url: "/api/setting/"+getCookie("token"),
+				contentType:'application/json',
+				success:function(data){
+					if(data != null) {
+						$("#inputTitle").val(data.title);
+						$("#inputInfo").val(data.infoURL);
+						$("#inputPhoto").val(data.imageURL);
+						$("#inputPrompt").val(data.prompt);
+						$("#inputTitleColor").val(data.titleColor);
+						$("#inputTextColor").val(data.textColor);
+						$("#inputPromptColor").val(data.promptColor);
+						$("#inputBackgroundColor").val(data.backgroundColor);
+						settingSeq = data.seq;
+					} else {
+						alert("초기 데이터를 세팅하세요!");
+					}
+				},
+				error:function(data){
+					alert("초기 데이터를 세팅하세요");
+				}
+			});
+
+			$.ajax({   
+				type: "GET",
+				url: "/api/command/list/"+getCookie("token"),
+				contentType:'application/json',
+				success:function(data){
+					if(data != null) {
+						var table = document.getElementById("commandTable");
+						for (var i = 0; i < data.length; i++) {
+							var row = table.insertRow(2);
+
+							var cell1 = row.insertCell(0);
+							var cell2 = row.insertCell(1);
+							var cell3 = row.insertCell(2)
+
+							cell1.innerHTML = "<div class='wrap'>"+data[i].command+"</div>";
+							cell2.innerHTML = "<div class='wrap'>"+data[i].text+"</div>";
+							cell3.innerHTML = "<div class='wrap'>"+data[i].seq+"</div>";
+
+							if(temp % 2 == 1){
+								$("tr:nth-child(even)").css("background-color", "#F2F2F200");
+								$("tr:nth-child(odd)").css("background-color", "#F2F2F2FF");
+							}
+							else {
+								$("tr:nth-child(even)").css("background-color", "#F2F2F2FF");
+								$("tr:nth-child(odd)").css("background-color", "#F2F2F200");
+							}
+							temp++;
+						}
+					} else {
+
+					}
+				},
+				error:function(data){
+
+				}
+			});
+		}
+		var settingSeq = 0;
+		
+
+		$("#saveButton").click(function () {
+			var tableRows = document.getElementById("commandTable").getElementsByTagName("tr").length;
+			var commandList = [];
+			for (var i = 3; i <= tableRows; i++) {
+
+				commandList.push( {"command":$("#commandTable > tbody > tr:nth-child("+i+") > td:nth-child(1) > .wrap").html(), 
+								"text": $("#commandTable > tbody > tr:nth-child("+i+") > td:nth-child(2) > .wrap").html(), 
+								"seq": $("#commandTable > tbody > tr:nth-child("+i+") > td:nth-child(3) > .wrap").html()
+								});
+				
+			}
+			$.ajax({   
+				type: "POST",
+				url: "/api/setting",
+				contentType:'application/json',
+				data:JSON.stringify({
+					"seq" : settingSeq,
+					"title" : $("#inputTitle").val(),
+					"infoURL" : $("#inputInfo").val(),
+					"imageURL" : $("#inputPhoto").val(),
+					"prompt" : $("#inputPrompt").val(),
+					"titleColor" : $("#inputTitleColor").val(),
+					"textColor" : $("#inputTextColor").val(),
+					"promptColor" : $("#inputPromptColor").val(),
+					"backgroundColor" : $("#inputBackgroundColor").val(),
+					"jwt" : getCookie("token"),
+					"commandList" : commandList
+				}),
+				success:function(data){
+					alert("저장 완료!");
+					location.reload();
+				},
+				error:function(data){
+					alert("저장 실패.");
+				}
+			});
+		});
+
+		$(document).on("dblclick","td > .wrap",function(){
+			var td = $(this).parents("td");
+
+			var val = $(this).html().replace(/	/gi, "");
+		    td.html("<textarea id='focus' class='autosize' rows='4' cols='65'>"+val+"</textarea>");
+		    $("#focus").focus();
+		    $("#focus").focusout(function () {
+				td.html("<div class='wrap'>"+$(this).val()+"</div>");
+			});
+		});
+
+		$("#addButton").click(function () {
+			if($("#inputCommand").val() != '' && $("#inputText").val() != ''){
+				var table = document.getElementById("commandTable");
+				var row = table.insertRow(2);
+
+				var cell1 = row.insertCell(0);
+				var cell2 = row.insertCell(1);
+				var cell3 = row.insertCell(2)
+
+				cell1.innerHTML = "<div class='wrap'>"+$("#inputCommand").val()+"</div>";
+				cell2.innerHTML = "<div class='wrap'>"+$("#inputText").val()+"</div>";
+				cell3.innerHTML = "<div class='wrap'>"+0+"</div>";
+
+				$("#inputCommand").val('');
+				$("#inputText").val('');
+
+				if(temp % 2 == 1){
+					$("tr:nth-child(even)").css("background-color", "#F2F2F200");
+					$("tr:nth-child(odd)").css("background-color", "#F2F2F2FF");
+				}
+				else {
+					$("tr:nth-child(even)").css("background-color", "#F2F2F2FF");
+					$("tr:nth-child(odd)").css("background-color", "#F2F2F200");
+				}
+				temp++;
+			}
+		});
+		$("#terminalButton").click(function () {
+			$.ajax({   
+				type: "GET",
+				url: "/api/user/id/"+getCookie("token"),
+				contentType:'application/json',
+				success:function(data){
+					if(data != null) {
+						location.href = "/terminal/"+data;
+					} else {
+						alert("초기 데이터를 세팅하세요!");
+					}
+				},
+				error:function(data){
+					alert("초기 데이터를 세팅하세요");
+				}
+			});
+		});
+		
+		function getCookie(cName) {
+	        cName = cName + '=';
+	        var cookieData = document.cookie;
+	        var start = cookieData.indexOf(cName);
+	        var cValue = '';
+	        if(start != -1){
+	            start += cName.length;
+	            var end = cookieData.indexOf(';', start);
+	            if(end == -1)end = cookieData.length;
+	            cValue = cookieData.substring(start, end);
+	        }
+	        return unescape(cValue);
+	    }
+	});
+</script>
+</head>
+<body>
+    <div id="container">
+    	<div id="box">
+    		<div id="terminalDiv">
+	    		<h2>Terminal</h2>
+	    		<div class="settingBox">
+	    			<p>Title</p>
+	    			<input type="text" placeholder="HyeongJin's Portfolio" id="inputTitle">
+	    		</div>
+	    		<div class="settingBox">
+	    			<p>Info URL</p>
+	    			<input type="text" placeholder="github.com/example" id="inputInfo">
+	    		</div>
+	    		<div class="settingBox">
+	    			<p>Profile Photo URL</p>
+	    			<input type="text" placeholder="www.yourProfileUrl.com/yourProfile" id="inputPhoto">
+	    		</div>
+	    		<div class="settingBox">
+	    			<p>Prompt Text</p>
+	    			<input type="text" placeholder="[HyeongJin@Portfolio] #" id="inputPrompt">
+	    		</div>
+	    	</div>
+	    	<div id="colorDiv">
+	    		<h2>Color</h2>
+	    		<div class="colorBox">
+	    			<p>TITLE </p>
+	    			<input type="color" id="inputTitleColor">
+	    		</div>
+	    		<div class="colorBox">
+	    			<p>TEXT </p>
+	    			<input type="color" id="inputTextColor">
+	    		</div>
+	    		<div class="colorBox">
+	    			<p>PROMPT </p>
+	    			<input type="color" id="inputPromptColor">
+	    		</div>
+	    		<div class="colorBox">
+	    			<p>BACKGROUND </p>
+	    			<input type="color" id="inputBackgroundColor">
+	    		</div>
+	    	</div>
+	    </div>
+    	<div id="commandDiv">
+    		<h2>Command</h2>
+    		<div id="commandBox">
+				<table id="commandTable">
+					<tr>
+						<td>명령어</td>
+						<td>결과값</td>
+					</tr>
+					<tr>
+						<td><input type="text" id="inputCommand"></td>
+						<td><textarea id="inputText" cols="65" rows="2"></textarea></td>
+					</tr>
+				</table>    			
+    		</div>
+    	</div>
+    </div>
+	
+	<div id="saveButton" class="button">
+		<img src="save.png" alt="저장">	
+	</div>
+	<div id="addButton" class="button">
+		<img src="add.png" alt="추가">	
+	</div>
+	<div id="terminalButton" class="button">
+		<img src="terminal.png" alt="터미널로 이동">	
+	</div>
+</body>
+</html>

@@ -36,8 +36,12 @@ public class CommandTests {
 		System.out.println(commandService.getText(commandVO));
 	}
 	
-	@Test
+	//@Test
 	public void getAllTextByUserSeqTest() {
 		System.out.println("$$++$$ :" + commandService.getAllCommandByUserSeq(1));
+	}
+	
+	@Test
+	public void contextLoads() {
 	}
 }

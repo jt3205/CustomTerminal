@@ -1,6 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 	<head>
     	<meta charset="utf-8" />
@@ -11,6 +9,14 @@
 		<!-- <script src="/views/jquery-3.3.1.min.js"></script>
 		<link rel="stylesheet" href="/views/bootstrap.min.css">
 		<script src="/views/bootstrap.min.js"></script> -->
+		<style>
+			::-webkit-scrollbar {
+		        width: 0px;
+		    }
+		    pre {
+		    		font-family: Inconsolata, monospace;
+		    }
+		</style>
  	</head>
   	<body>
 	    <div id="container">
@@ -23,9 +29,11 @@
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <!-- <script src="/views/js.js"></script> -->
     <script>
+	    
 		$( document ).ready(function() {
 			var setting;
-			var uid = window.location.href.substring(31);
+			var arr = window.location.href.split("/");
+			var uid = arr[arr.length - 1];
 			console.log(uid);
 			$.ajax({   
 				type: "GET",
@@ -44,10 +52,12 @@
 						init();
 					} else {
 						alert("초기 데이터를 세팅하세요!");
+						location.href="/views/login.html";
 					}
 				},
 				error:function(data){
 					alert("초기 데이터를 세팅하세요!");
+					location.href="/views/login.html";
 				}
 			});
 
@@ -170,6 +180,7 @@
 							type: "GET",
 							url: "/api/command/"+cmd+"/"+uid,
 							contentType:'application/json',
+							async: false,
 							success:function(data){
 								if(data.text != undefined) {
 			            			output(cmd + ': '+data.text);

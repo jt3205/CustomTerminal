@@ -10,4 +10,6 @@ public class Constants {
 	public final static String SALT_KEY = "!CuST0mTerMiNa1!";
 	
 	public final static String MAIL_SENDER = "jnorol.test@gmail.com";
+	
+	public final static String MAIL_PASSWORD = "jt127227";
 }

@@ -20,8 +20,12 @@ public class AuthenticationTests {
 		authService.sendAuthKey("jt3205@naver.com");
 	}
 	
-	@Test
+	//@Test
 	public void checkAuthTest() {
 		System.out.println(authService.checkAuth(new AuthenticationVO("hoFtd8", "jt3205@naver.com")));
+	}
+	
+	@Test
+	public void contextLoads() {
 	}
 }

@@ -47,8 +47,11 @@ public class SettingTests {
 		System.out.println(settingMapper.getSettingByUserSeq(2));
 	}
 	
-	@Test
+	//@Test
 	public void getSettingByUserId() {
 		System.out.println(settingMapper.getSettingByUserId("test"));
+	}
+	@Test
+	public void contextLoads() {
 	}
 }

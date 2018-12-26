@@ -14,6 +14,7 @@ import com.jnorol.terminal.domain.RegisterDTO;
 import com.jnorol.terminal.domain.UserVO;
 import com.jnorol.terminal.service.AuthenticationService;
 import com.jnorol.terminal.service.UserService;
+import com.jnorol.terminal.util.JWTUtil;
 
 @RestController
 @RequestMapping("/api/user")
@@ -24,6 +25,9 @@ public class UserController {
 	
 	@Autowired
 	private AuthenticationService authService;
+
+	@Autowired
+	private JWTUtil jwtUtil;
 	
 	@PostMapping
 	public String login(@RequestBody UserVO userVO) {
@@ -33,7 +37,7 @@ public class UserController {
 	@PostMapping("/register")
 	public boolean register(@RequestBody RegisterDTO registerDTO) {
 		AuthenticationVO authVO = new AuthenticationVO(registerDTO.getAuthKey(), registerDTO.getId());
-		if(authService.checkAuth(authVO)) {
+		if(/*authService.checkAuth(authVO) 공인아이피 문제.. */ "000000".equals(registerDTO.getAuthKey())) {
 			userService.insertUser(new UserVO(0, registerDTO.getId(), registerDTO.getPassword(), registerDTO.getName()));
 			return true;
 		} else {
@@ -43,7 +47,13 @@ public class UserController {
 	
 	@GetMapping("/{email}")
 	public String emailAuthentication(@PathVariable String email) {
-		authService.sendAuthKey(email);
+		//authService.sendAuthKey(email);
 		return "ok";
+	}
+	
+	@GetMapping("/id/{token}")
+	public String getId(@PathVariable String token) {
+		UserVO user = userService.getUser(Integer.parseInt(jwtUtil.getClaim(token, "userSeq")));
+		return user.getId();
 	}
 }

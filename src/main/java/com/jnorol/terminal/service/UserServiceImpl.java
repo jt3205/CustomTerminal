@@ -53,4 +53,9 @@ public class UserServiceImpl implements UserService {
 	public int getUserSeqById(String id) {
 		return userMapper.getUserSeqById(id);
 	}
+	
+	@Override
+	public UserVO getUser(int seq) {
+		return userRepository.getOne(seq);
+	}
 }

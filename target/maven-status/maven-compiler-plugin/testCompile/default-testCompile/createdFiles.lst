@@ -1,0 +1,5 @@
+com/jnorol/terminal/UserTests.class
+com/jnorol/terminal/SettingTests.class
+com/jnorol/terminal/CommandTests.class
+com/jnorol/terminal/AuthenticationTests.class
+com/jnorol/terminal/CustomTerminalApplicationTests.class

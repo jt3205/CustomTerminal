@@ -8,4 +8,6 @@ public interface UserService {
 	public String login(UserVO userVO);
 	
 	public int getUserSeqById(String id);
+	
+	public UserVO getUser(int seq);
 }

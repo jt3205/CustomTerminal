@@ -27,7 +27,7 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class AuthenticationVO {
 	@Id
-	@Column(name = "AUTH_KEY", nullable = false, updatable = false)
+	@Column(name = "AUTH_KEY", length = 6, nullable = false, updatable = false)
 	private String key;
 	
 	@Column(name = "AUTH_EMAIL", nullable = false, updatable = false)
